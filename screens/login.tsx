@@ -7,7 +7,7 @@ import {
   SafeAreaView,
   Image,
 } from "react-native";
-import { globalStyles } from "@/styles/globalStyles";
+import { baseColors } from "@/styles/colors/baseColors"; // Import baseColors
 
 export default function LoginScreen() {
   return (
@@ -57,7 +57,7 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: globalStyles.backgroundDark,
+    backgroundColor: baseColors.blue, // Use the blue color from baseColors
     alignItems: "center",
     padding: 20,
   },
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: "bold",
-    color: globalStyles.textPrimary,
+    color: baseColors.white, // Use white color for text
     textAlign: "center",
     marginVertical: 20,
   },
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     height: 53, // Fixed height for the button
     borderRadius: 8, // Rounded corners
     borderWidth: 1, // Border width
-    shadowColor: "#111D13", // Shadow color
+    shadowColor: baseColors.green, // Shadow color
     shadowOffset: { width: 0, height: 2 }, // Shadow position
     shadowOpacity: 0.5, // Shadow transparency
     shadowRadius: 16, // Shadow spread
@@ -105,12 +105,12 @@ const styles = StyleSheet.create({
     marginBottom: 35, // Add space between buttons
   },
   metamaskButton: {
-    backgroundColor: "#111D13", // Button background color
-    borderColor: "#00CB6B", // Border color for Metamask button
+    backgroundColor: baseColors.green, // Button background color
+    borderColor: baseColors.primaryGreen, // Border color for Metamask button
   },
   binanceButton: {
-    backgroundColor: "#111D13", // Button background color
-    borderColor: "#00CB6B", // Border color for Binance button
+    backgroundColor: baseColors.green, // Button background color
+    borderColor: baseColors.primaryGreen, // Border color for Binance button
   },
   buttonIcon: {
     width: 24,
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   buttonText: {
-    color: "#00CB6B", // Text color
+    color: baseColors.primaryGreen, // Text color
     fontSize: 16,
     fontWeight: "bold",
   },
