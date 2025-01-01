@@ -49,7 +49,7 @@ export default function TabLayout() {
 
 const styles = StyleSheet.create({
   tabBar: {
-    backgroundColor: "#00CB6B33", // Semi-transparent green background
+    backgroundColor: "#111D13", // Semi-transparent green background
     borderTopWidth: 0, // Remove top border
     height: 70, // Height of the tab bar
     paddingVertical: 10, // Add vertical padding

@@ -18,6 +18,7 @@
     "@expo/metro-runtime": "^4.0.0",
     "@expo/vector-icons": "^14.0.4",
     "@react-native-async-storage/async-storage": "1.23.1",
+    "@react-native-community/blur": "^4.4.1",
     "@react-native-community/netinfo": "11.3.1",
     "@react-navigation/native": "^6.0.2",
     "@thirdweb-dev/react-native-adapter": "^1.5.1",
