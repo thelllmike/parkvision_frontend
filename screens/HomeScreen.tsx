@@ -1,10 +1,3 @@
-// import React from "react";
-// import LoginScreen from "../../screens/login"; // Adjust path based on your folder structure
-
-// export default function HomeScreen() {
-//   return <LoginScreen />;
-// }
-
 import React from "react";
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from "react-native";
 import alertColors from "@/styles/colors/alertColors";
