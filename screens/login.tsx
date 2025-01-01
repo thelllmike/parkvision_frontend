@@ -20,8 +20,6 @@ export default function LoginScreen() {
         />
       </View>
 
-    
-
       {/* Parking Illustration */}
       <Image
         source={require("../assets/images/Parking.png")} // Parking illustration
@@ -29,8 +27,8 @@ export default function LoginScreen() {
         resizeMode="contain"
       />
 
-        {/* Title */}
-        <Text style={styles.title}>Login With Your Wallet To Start Using App</Text>
+      {/* Title */}
+      <Text style={styles.title}>Login With Your Wallet To Start Using App</Text>
 
       {/* Wallet Buttons */}
       <View style={styles.buttonsContainer}>
@@ -73,7 +71,7 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   title: {
-    fontSize: 22,
+    fontSize: 30,
     fontWeight: "bold",
     color: globalStyles.textPrimary,
     textAlign: "center",
@@ -92,18 +90,27 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 15,
-    marginVertical: 10,
-    borderRadius: 8,
-    borderWidth: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    gap: 10,
+    width: 380, // Fixed width for the button
+    height: 53, // Fixed height for the button
+    borderRadius: 8, // Rounded corners
+    borderWidth: 1, // Border width
+    shadowColor: "#111D13", // Shadow color
+    shadowOffset: { width: 0, height: 2 }, // Shadow position
+    shadowOpacity: 0.5, // Shadow transparency
+    shadowRadius: 16, // Shadow spread
+    elevation: 5, // Shadow for Android
+    marginBottom: 35, // Add space between buttons
   },
   metamaskButton: {
-    backgroundColor: globalStyles.buttonPrimary,
-    borderColor: globalStyles.buttonPrimary,
+    backgroundColor: "#111D13", // Button background color
+    borderColor: "#00CB6B", // Border color for Metamask button
   },
   binanceButton: {
-    backgroundColor: globalStyles.textSecondary,
-    borderColor: globalStyles.textSecondary,
+    backgroundColor: "#111D13", // Button background color
+    borderColor: "#00CB6B", // Border color for Binance button
   },
   buttonIcon: {
     width: 24,
@@ -112,7 +119,7 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   buttonText: {
-    color: globalStyles.buttonText,
+    color: "#00CB6B", // Text color
     fontSize: 16,
     fontWeight: "bold",
   },
