@@ -2,16 +2,25 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
+    "baseUrl": "./",
     "paths": {
-      "@/*": [
-        "./*"
-      ]
-    }
+      "@/*": ["./*"] // Allows absolute imports using "@/"
+    },
+    "jsx": "react", // Ensures proper JSX support
+    "types": ["react", "react-native", "react-native-svg"], // Add relevant types
+    "moduleResolution": "node", // Ensure modules resolve correctly
+    "resolveJsonModule": true, // Allows importing JSON files
+    "allowSyntheticDefaultImports": true, // Necessary for some libraries like `react-native-svg`
+    "esModuleInterop": true // Fixes default import issues
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts"
+    "expo-env.d.ts",
+    "declarations.d.ts" // Include your SVG declaration file
+  ],
+  "exclude": [
+    "node_modules" // Exclude node_modules to avoid conflicts
   ]
 }

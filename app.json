@@ -1,7 +1,7 @@
 {
 	"expo": {
-		"name": "thirdweb playground",
-		"slug": "thirdweb-playground",
+		"name": "park vision",
+		"slug": "park-vision",
 		"version": "1.0.0",
 		"orientation": "portrait",
 		"icon": "./assets/images/icon.png",
@@ -10,7 +10,7 @@
 		"splash": {
 			"image": "./assets/images/splash.png",
 			"resizeMode": "contain",
-			"backgroundColor": "#ffffff"
+"backgroundColor": "#141421"
 		},
 		"ios": {
 			"supportsTablet": true,
@@ -22,8 +22,8 @@
 		},
 		"android": {
 			"adaptiveIcon": {
-				"foregroundImage": "./assets/images/adaptive-icon.png",
-				"backgroundColor": "#ffffff"
+				"foregroundImage": "./assets/images/icon.png",
+				"backgroundColor": "#141421"
 			},
 			"package": "com.thirdweb.demo",
 			"intentFilters": [
@@ -41,7 +41,7 @@
 		"web": {
 			"bundler": "metro",
 			"output": "static",
-			"favicon": "./assets/images/favicon.png"
+			"favicon": "./assets/images/icon.png"
 		},
 		"plugins": [
 			"expo-router",
