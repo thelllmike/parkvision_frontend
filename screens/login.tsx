@@ -20,8 +20,7 @@ export default function LoginScreen() {
         />
       </View>
 
-      {/* Title */}
-      <Text style={styles.title}>Login With Your Wallet To Start Using App</Text>
+    
 
       {/* Parking Illustration */}
       <Image
@@ -29,6 +28,9 @@ export default function LoginScreen() {
         style={styles.illustration}
         resizeMode="contain"
       />
+
+        {/* Title */}
+        <Text style={styles.title}>Login With Your Wallet To Start Using App</Text>
 
       {/* Wallet Buttons */}
       <View style={styles.buttonsContainer}>
@@ -66,7 +68,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logo: {
-    width: 150, // Adjust width
+    width: 250, // Adjust width
     height: 150, // Adjust height
     resizeMode: "contain",
   },
