@@ -1,6 +1,6 @@
 import React from "react";
 import { Tabs } from "expo-router";
-import { StyleSheet, Image, ImageSourcePropType } from "react-native";
+import { StyleSheet, Image, ImageSourcePropType, View } from "react-native";
 import home from "../../assets/images/home.png"; // Fixed variable name
 import clock from "../../assets/images/clock.png"; // Fixed variable name
 import parking from "../../assets/images/parkinglogo.png"; // Fixed variable name
@@ -26,13 +26,20 @@ export default function TabLayout() {
         tabBarIcon: ({ focused }) => {
           const icon = tabIcons[route.name]; // Safely access the icon
           return (
-            <Image
-              source={icon}
+            <View
               style={[
-                styles.icon,
-                { tintColor: focused ? baseColors.primaryGreen : baseColors.white },
+                styles.iconContainer,
+                focused && styles.iconContainerFocused, // Apply focus styles
               ]}
-            />
+            >
+              <Image
+                source={icon}
+                style={[
+                  styles.icon,
+                  { tintColor: focused ? baseColors.black : baseColors.white },
+                ]}
+              />
+            </View>
           );
         },
         tabBarShowLabel: false, // Hide labels
@@ -55,6 +62,20 @@ const styles = StyleSheet.create({
     paddingVertical: 10, // Add vertical padding
     justifyContent: "space-around",
     alignItems: "center",
+  },
+  iconContainer: {
+    width: 40, // Default width
+    height: 40, // Default height
+    padding: 8, // Default padding
+    gap: 10,
+    borderRadius: 8, // Default border radius
+    opacity: 1, // Default opacity
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  iconContainerFocused: {
+    backgroundColor: baseColors.primaryGreen, // Focused background color
+    opacity: 1, // Ensure the focused icon is fully visible
   },
   icon: {
     width: 24, // Icon width
