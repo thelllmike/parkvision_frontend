@@ -9,7 +9,11 @@ import background from "../../assets/images/background.png";
 
 export default function HomeScreen() {
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer} // Ensures content is scrollable
+      showsVerticalScrollIndicator={false} // Hides the vertical scroll indicator
+    >
       {/* Header */}
       <View style={styles.header}>
         <Text style={styles.greeting}>Welcome Back, Jon!</Text>
@@ -75,8 +79,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#1A1B22",
+  },
+  contentContainer: {
     paddingHorizontal: 16,
     paddingTop: 24,
+    paddingBottom: 16, // Adds spacing at the bottom for scroll
   },
   header: {
     flexDirection: "row",
