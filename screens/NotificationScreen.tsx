@@ -1,14 +1,78 @@
-import React from "react";
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
+import {
+  GestureHandlerRootView,
+  Swipeable,
+} from "react-native-gesture-handler"; // Import swipeable
 import { baseColors } from "@/styles/colors/baseColors";
 import completedIcon from "../../assets/images/completed.png";
 import violationIcon from "../../assets/images/violation.png";
 import markReadIcon from "../../assets/images/markread.png";
 import backIcon from "../../assets/images/back.png";
+import deleteIcon from "../../assets/images/delete.png";
 
 export default function NotificationsScreen() {
+  const [notifications, setNotifications] = useState([
+    {
+      id: 1,
+      type: "violation",
+      title: "Violation",
+      message: "You received a violation for incorrect parked slot.",
+      amount: "Charged 0.001 ETH",
+      time: "3.23 PM",
+      backgroundColor: "#D8315B1A",
+      borderColor: "#D8315B",
+      titleColor: "#D8315B",
+    },
+    {
+      id: 2,
+      type: "completed",
+      title: "Completed",
+      message:
+        "Your payment received for L0205 parking at Level 02, Red Desert Avenue in Del Perro, Los Santos.",
+      amount: "Paid 0.008 ETH",
+      time: "12.10.2024",
+      backgroundColor: "#454ADE1A",
+      borderColor: "#454ADE",
+      titleColor: "#454ADE",
+    },
+    {
+      id: 3,
+      type: "completed",
+      title: "Completed",
+      message:
+        "Your payment received for L0205 parking at Level 02, Red Desert Avenue in Del Perro, Los Santos.",
+      amount: "Paid 0.008 ETH",
+      time: "12.10.2024",
+      backgroundColor: "#454ADE1A",
+      borderColor: "#454ADE",
+      titleColor: "#454ADE",
+    },
+  ]);
+
+  const handleDelete = (id: number) => {
+    setNotifications(notifications.filter((notification) => notification.id !== id));
+  };
+
+  const renderRightActions = (id: number) => (
+    <TouchableOpacity
+      style={styles.clearButton}
+      onPress={() => handleDelete(id)}
+    >
+      <Image source={deleteIcon} style={styles.deleteIcon} />
+      <Text style={styles.clearText}>Clear</Text>
+    </TouchableOpacity>
+  );
+
   return (
-    <View style={styles.container}>
+    <GestureHandlerRootView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity>
@@ -25,55 +89,50 @@ export default function NotificationsScreen() {
         contentContainerStyle={styles.scrollContainer}
         showsVerticalScrollIndicator={false}
       >
-        {/* Violation Notification */}
-        <View style={[styles.notificationCard, styles.violationCard]}>
-          <View style={styles.notificationHeader}>
-            <Image source={violationIcon} style={styles.icon} />
-            <Text style={styles.violationTitle}>Violation</Text>
-            <Text style={styles.notificationAmount}>Charged 0.001 ETH</Text>
-          </View>
-          <Text style={styles.notificationMessage}>
-            You received a violation for incorrect parked slot.
-          </Text>
-          <Text style={styles.notificationTime}>3.23 PM</Text>
-        </View>
-
-        {/* Completed Notifications */}
-        {[...Array(4)].map((_, index) => (
-          <View key={index} style={[styles.notificationCard, styles.completedCard]}>
-            <View style={styles.notificationHeader}>
-              <Image source={completedIcon} style={styles.icon} />
-              <Text style={styles.completedTitle}>Completed</Text>
-              <Text style={styles.notificationAmount}>Paid 0.008 ETH</Text>
+        {notifications.map((notification) => (
+          <Swipeable
+            key={notification.id}
+            renderRightActions={() => renderRightActions(notification.id)}
+          >
+            <View
+              style={[
+                styles.notificationCard,
+                {
+                  backgroundColor: notification.backgroundColor,
+                  borderColor: notification.borderColor,
+                },
+              ]}
+            >
+              <View style={styles.notificationHeader}>
+                <Image
+                  source={
+                    notification.type === "violation"
+                      ? violationIcon
+                      : completedIcon
+                  }
+                  style={styles.icon}
+                />
+                <Text
+                  style={[
+                    styles.notificationTitle,
+                    { color: notification.titleColor },
+                  ]}
+                >
+                  {notification.title}
+                </Text>
+                <Text style={styles.notificationAmount}>
+                  {notification.amount}
+                </Text>
+              </View>
+              <Text style={styles.notificationMessage}>
+                {notification.message}
+              </Text>
+              <Text style={styles.notificationTime}>{notification.time}</Text>
             </View>
-            <Text style={styles.notificationMessage}>
-              Your payment received for <Text style={styles.highlight}>L0205</Text> parking at Level
-              02, Red Desert Avenue in Del Perro, Los Santos.
-            </Text>
-            <Text style={styles.notificationTime}>12.10.2024</Text>
-          </View>
-        ))}
-
-        {/* Unread Notifications Header */}
-        <Text style={styles.unreadHeader}>Unread Notifications</Text>
-
-        {/* Unread Completed Notifications */}
-        {[...Array(3)].map((_, index) => (
-          <View key={index} style={[styles.notificationCard, styles.completedCard]}>
-            <View style={styles.notificationHeader}>
-              <Image source={completedIcon} style={styles.icon} />
-              <Text style={styles.completedTitle}>Completed</Text>
-              <Text style={styles.notificationAmount}>Paid 0.008 ETH</Text>
-            </View>
-            <Text style={styles.notificationMessage}>
-              Your payment received for <Text style={styles.highlight}>L0205</Text> parking at Level
-              02, Red Desert Avenue in Del Perro, Los Santos.
-            </Text>
-            <Text style={styles.notificationTime}>12.10.2024</Text>
-          </View>
+          </Swipeable>
         ))}
       </ScrollView>
-    </View>
+    </GestureHandlerRootView>
   );
 }
 
@@ -124,6 +183,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 16,
     marginBottom: 16,
+    borderWidth: 1,
   },
   notificationHeader: {
     flexDirection: "row",
@@ -136,24 +196,8 @@ const styles = StyleSheet.create({
     marginRight: 8,
     resizeMode: "contain",
   },
-  violationCard: {
-    backgroundColor: "#D8315B1A",
-    borderColor: "#D8315B",
-    borderWidth: 1,
-  },
-  violationTitle: {
+  notificationTitle: {
     fontSize: 16,
-    color: "#D8315B",
-    fontWeight: "bold",
-  },
-  completedCard: {
-    backgroundColor: "#454ADE1A",
-    borderColor: "#454ADE",
-    borderWidth: 1,
-  },
-  completedTitle: {
-    fontSize: 16,
-    color: "#454ADE",
     fontWeight: "bold",
   },
   notificationAmount: {
@@ -166,19 +210,31 @@ const styles = StyleSheet.create({
     color: baseColors.white,
     marginVertical: 8,
   },
-  highlight: {
-    color: baseColors.primaryGreen,
-    fontWeight: "bold",
-  },
   notificationTime: {
     fontSize: 12,
     color: baseColors.white,
     opacity: 0.7,
   },
-  unreadHeader: {
-    fontSize: 16,
-    color: baseColors.white,
+  clearButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#D8315B1A",
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderWidth: 1,
+    borderColor: "#D8315B",
+  },
+  deleteIcon: {
+    width: 16,
+    height: 16,
+    marginRight: 4,
+    resizeMode: "contain",
+  },
+  clearText: {
+    fontSize: 14,
+    color: "#D8315B",
     fontWeight: "bold",
-    marginVertical: 8,
   },
 });
