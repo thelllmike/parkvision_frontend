@@ -12,8 +12,24 @@ import { baseColors } from "@/styles/colors/baseColors";
 import profile from "../../assets/images/profile.png"; // Profile image
 import editIcon from "../../assets/images/edit.png"; // Edit button icon
 
+// Import Thirdweb hooks from the official package
+import { useContract, useContractWrite } from "@thirdweb-dev/react";
+
+// Replace with your deployed contract address
+const contractAddress = "0xYourContractAddressHere";
+
 export default function ProfileScreen() {
   const [isModalVisible, setModalVisible] = useState(false);
+  const [userName, setUserName] = useState("Jon Doe");
+  const [vehicleNumber, setVehicleNumber] = useState("WY65IHK");
+
+  // Get the contract instance using Thirdweb hook
+  const { contract } = useContract(contractAddress);
+  // Prepare the write function for calling registerUserAndVehicle
+  const { mutate: registerUserAndVehicle } = useContractWrite(
+    contract,
+    "registerUserAndVehicle"
+  );
 
   const handleEditPress = () => {
     setModalVisible(true);
@@ -23,11 +39,28 @@ export default function ProfileScreen() {
     setModalVisible(false);
   };
 
+  const handleUpdate = () => {
+    // Pass an object with an args property containing the parameters.
+    registerUserAndVehicle(
+      { args: [userName, vehicleNumber] },
+      {
+        onSuccess: () => {
+          alert("Profile updated successfully!");
+          setModalVisible(false);
+        },
+        onError: (error) => {
+          console.error(error);
+          alert("Error updating profile");
+        },
+      }
+    );
+  };
+
   return (
     <View
       style={[
         styles.container,
-        isModalVisible && { backgroundColor: "#111D1380" }, // Dark overlay when modal is open
+        isModalVisible && { backgroundColor: "#111D1380" },
       ]}
     >
       {/* Profile Image */}
@@ -36,8 +69,10 @@ export default function ProfileScreen() {
       </View>
 
       {/* User Details */}
-      <Text style={styles.userName}>Jon Doe</Text>
-      <Text style={styles.userDetails}>WY65IHK - Honda CRV</Text>
+      <Text style={styles.userName}>{userName}</Text>
+      <Text style={styles.userDetails}>
+        {vehicleNumber} - Honda CRV
+      </Text>
 
       {/* Edit Profile Button */}
       <TouchableOpacity style={styles.editButton} onPress={handleEditPress}>
@@ -55,7 +90,10 @@ export default function ProfileScreen() {
         <View style={styles.modalOverlay}>
           <View style={styles.modalContainer}>
             <Text style={styles.modalTitle}>Update Profile</Text>
-            <TouchableOpacity onPress={handleCloseModal} style={styles.closeButton}>
+            <TouchableOpacity
+              onPress={handleCloseModal}
+              style={styles.closeButton}
+            >
               <Text style={styles.closeButtonText}>X</Text>
             </TouchableOpacity>
 
@@ -64,23 +102,22 @@ export default function ProfileScreen() {
               style={styles.input}
               placeholder="Name"
               placeholderTextColor={baseColors.white}
-              defaultValue="Jon Doe"
+              value={userName}
+              onChangeText={setUserName}
             />
             <TextInput
               style={styles.input}
-              placeholder="Vehicle"
+              placeholder="Vehicle Number"
               placeholderTextColor={baseColors.white}
-              defaultValue="Honda CRV"
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="License"
-              placeholderTextColor={baseColors.white}
-              defaultValue="WY65IHK"
+              value={vehicleNumber}
+              onChangeText={setVehicleNumber}
             />
 
             {/* Update Button */}
-            <TouchableOpacity style={styles.updateButton} onPress={handleCloseModal}>
+            <TouchableOpacity
+              style={styles.updateButton}
+              onPress={handleUpdate}
+            >
               <Text style={styles.updateButtonText}>Update</Text>
             </TouchableOpacity>
           </View>
@@ -156,12 +193,12 @@ const styles = StyleSheet.create({
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: "#111D1380", // Dark overlay background
+    backgroundColor: "#111D1380",
     justifyContent: "center",
     alignItems: "center",
   },
   modalContainer: {
-    backgroundColor: "#141421", // Solid BG Blue
+    backgroundColor: "#141421",
     padding: 20,
     borderRadius: 10,
     width: "90%",
@@ -200,7 +237,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     borderWidth: 1,
-    borderColor: baseColors.primaryGreen, // Green border
+    borderColor: baseColors.primaryGreen,
     borderRadius: 8,
     paddingVertical: 12,
     paddingHorizontal: 24,
@@ -209,7 +246,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 16,
     elevation: 4,
-    backgroundColor: "transparent", // Transparent background for consistency
+    backgroundColor: "transparent",
   },
   updateButtonText: {
     fontSize: 16,
